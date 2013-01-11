@@ -9,33 +9,33 @@ How to use
 
 The js code :
         
-#js
-var uslider = new uSlider($('myslider'), {
-    directionnav: true,
-    centercrop: true,
-    effect: 'slide'
-});
+        #js 
+        var uslider = new uSlider($('myslider'), {
+            directionnav: true,
+            centercrop: true,
+            effect: 'slide'
+        });
 
 
 The html code :
 
-#html
-<div id="myslider" class="uSlider">
-    <ul class="uSlider-slides">
-        <li>
-            <img src="http://farm9.staticflickr.com/8063/8162601499_3926d3bd5e_c.jpg" class="load" />
-        </li>
-        <li>
-            <img src="http://farm9.staticflickr.com/8070/8162638266_6a28e0526a_c.jpg" class="load" />
-        </li>
-        <li>
-            <img src="http://farm9.staticflickr.com/8489/8162653194_5a2d6d8fc4_c.jpg" class="load" />
-        </li>
-        <li>
-            <img src="http://farm8.staticflickr.com/7254/8162630593_1c77bfc9b7_c.jpg" class="load" />
-        </li>
-   </ul>
-</div>
+        #html
+        <div id="myslider" class="uSlider">
+            <ul class="uSlider-slides">
+                <li>
+                    <img src="http://farm9.staticflickr.com/8063/8162601499_3926d3bd5e_c.jpg" class="load" />
+                </li>
+                <li>
+                    <img src="http://farm9.staticflickr.com/8070/8162638266_6a28e0526a_c.jpg" class="load" />
+                </li>
+                <li>
+                    <img src="http://farm9.staticflickr.com/8489/8162653194_5a2d6d8fc4_c.jpg" class="load" />
+                </li>
+                <li>
+                    <img src="http://farm8.staticflickr.com/7254/8162630593_1c77bfc9b7_c.jpg" class="load" />
+                </li>
+           </ul>
+        </div>
 
 Live Demos
 -----------
