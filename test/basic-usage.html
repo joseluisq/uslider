@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>uSlider | Basic Usage</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <link rel="stylesheet" href="../test/css/uSider.css" />
+
+        <script src="../assets/mootools-core-1.4.5-full-compat-yc.js"></script>
+        <script src="https://raw.github.com/joseluisq/usize/master/assets/uSizer-1.0.js"></script>
+        <script src="../assets/uSlider-1.0.js"></script>
+
+        <script>
+            window.addEvent('domready', function(){
+                
+                /* Basic usage width media queries to auto-resizing
+                 ****************************************************
+                 **/
+                
+                var slider = $('slider'), 
+                uslider = new uSlider(slider, {
+                    directionnav: false,
+                    centercrop: false,
+                    effect: 'slide'
+                });
+
+                /* Event handlers */
+                $('prev').addEvent('click', function(){
+                    uslider.back();
+                });
+    
+                $('next').addEvent('click', function(){
+                    uslider.next();
+                });
+    
+                $('go').addEvent('click', function(){
+                    uslider.move(2);
+                });
+
+            });
+            
+        </script>
+
+
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0; 
+                overflow: hidden;
+            }
+
+            body {
+                font-family: Lucida Console, Monaco, monospace;
+                font-size: 11px;
+            }
+
+            #nav a {
+                padding: 3px;
+                display: inline-block;
+            }
+
+            .info {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                left: 5%;
+                top: 20%;
+                background: rgba(50,50,50, 0.7);
+                border-radius: 150px;
+                color: white;
+                z-index: 1;
+            }
+
+            .info p {
+                padding: 50px;
+                font-size: 20px;
+            }
+
+
+            /* Using media queries to auto-resizing */
+
+            @media screen and (max-width: 800px) {
+                .uSlider {
+                    width: 600px;
+                    background: gray;
+                }
+            }
+
+            @media screen and (min-width: 1024px) {
+                .uSlider {
+                    width: 900px;
+                }
+            }
+
+            @media screen and (max-width: 600px) {
+                .uSlider {
+                    width: 350px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="nav" style="position: fixed; width: 200px; left: 2%; color: gray; z-index: 2;">
+            <h4>Handler Functions</h4>
+            <div style="padding: 5px 0;">Just resize the window for queries to auto-resizing</div>
+            
+            <a id="prev" href="javascript:;">uSlider.back()</a><br>
+            <a id="next" href="javascript:;">uSlider.next()</a><br>
+            <a id="go" href="javascript:;">uSlider.move(2)</a>
+        </div>
+
+        <div id="slider" class="uSlider">
+            <ul class="uSlider-slides">
+                <li>
+                    <div class="info">
+                        <p>Phasellus ultricies mauris vel dolor suscipit a ornare lorem suscipit.</p>
+                    </div>
+                    <img src="http://farm9.staticflickr.com/8063/8162601499_3926d3bd5e_c.jpg" class="load" />
+                </li>
+                <li>
+                    <div class="info">
+                        <p>Integer fermentum imperdiet neque, in vehicula mi tempus id. <br>
+                            Proin consequat bibendum.</p>
+                    </div>
+                    <img src="http://farm8.staticflickr.com/7121/8162602551_02af9d8456_c.jpg" class="load" /></li>
+                <li>
+                    <div class="info">
+                        <p>Integer fermentum imperdiet neque, bibendum.</p>
+                    </div>
+                    <img src="http://farm9.staticflickr.com/8070/8162638266_6a28e0526a_c.jpg" class="load" /></li>
+                <li>
+                    <div class="info">
+                        <p>Phasellus ultricies mauris vel dolor suscipit. </p>
+                    </div>
+                    <img src="http://farm8.staticflickr.com/7133/8162601967_6999c57631_c.jpg" class="load" /></li>
+                <li>
+                    <div class="info">
+                        <p>Integer fermentum imperdiet neque, in vehicula mi tempus id.</p>
+                    </div>
+                    <img src="http://farm9.staticflickr.com/8489/8162653194_5a2d6d8fc4_c.jpg" class="load" /></li>
+                <li>
+                    <div class="info">
+                        <p>Phasellus ultricies mauris vel dolor suscipit a ornare lorem suscipit.</p>
+                    </div>
+                    <img src="http://farm8.staticflickr.com/7254/8162630593_1c77bfc9b7_c.jpg" class="load" /></li>
+            </ul>
+        </div>
+
+    </body>
+</html>
