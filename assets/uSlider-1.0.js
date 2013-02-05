@@ -400,6 +400,11 @@ window.uSlider = new Class({
     centerCrop: function(slide, img, width, height) {
         this.uSizer.setParent(slide);
         this.uSizer.setChild(img);
+
+        if (this.options.resize) {
+            this.uSizer.centerCropResize(width, height);
+        }
+
         this.uSizer.centerCrop(width, height);
     }
 });
