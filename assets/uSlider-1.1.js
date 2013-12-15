@@ -1,7 +1,7 @@
 /*
  ---
  
- name: uSlider
+ name: uSlider v1.1
  description: Simple Mootools CSS3 Adaptable Slider
  license: MIT-Style License <http://www.lbnstudio.fr/license.txt>
  copyright: Jose Luis Quintana <http://www.lbnstudio.fr/>
@@ -14,7 +14,7 @@
  */
 
 window.uSlider = new Class({
-    version: '1.0',
+    version: '1.1',
     options: {
         controlnav: true,
         directionnav: true,
@@ -24,7 +24,7 @@ window.uSlider = new Class({
         delay: 3000,
         duration: 1200,
         effect: 'slide',
-        transition: 'quint:out',
+        transition: 'expo:out',
         imageclass: 'load',
         centercrop: false
     },
@@ -162,7 +162,7 @@ window.uSlider = new Class({
 
                     img.inject(li);
                     img.addEvent('load', function(e) {
-                        if (opt.effect == 'fade' && this.stackSlides.length == 1) {
+                        if (opt.effect === 'fade' && this.stackSlides.length == 1) {
                             li.setStyles({
                                 'visibility': 'visible',
                                 'opacity': 1
@@ -310,7 +310,7 @@ window.uSlider = new Class({
         this.slidewrap.getElements('li.uSlider-slide-active').removeClass('uSlider-slide-active');
         this.stackSlides[this.i].addClass('uSlider-slide-active');
 
-        if (this.options.effect == 'fade') {
+        if (this.options.effect === 'fade') {
             if (this.prevslide) {
                 this.prevslide.tween('opacity', 0);
             }
@@ -328,36 +328,38 @@ window.uSlider = new Class({
         this.prevslide = slide;
     },
     translation: function(i, duration) {
-        clearTimeout(this.timeout);
+        if (this.options.effect === 'slide') {
+            clearTimeout(this.timeout);
 
-        var slider = this.slider.getSize().x, target, len = this.stackSlides.length - 1,
-                limits = null, p = this.prev;
+            var slider = this.slider.getSize().x, target, len = this.stackSlides.length - 1,
+                    limits = null, p = this.prev;
 
-        if (this.jump == 'start') {
-            duration = 0;
-            target = -slider;
-            this.jump = 'run';
-        } else if ('run') {
-            if (p == len && i == 0) {
-                target = -((slider * (p + 1)) + slider);
-                limits = -slider;
-            } else if (p == 0 && i == len) {
-                target = 0;
-                limits = -((len * slider) + slider);
-            } else {
-                target = -((slider * i) + slider);
+            if (this.jump == 'start') {
+                duration = 0;
+                target = -slider;
+                this.jump = 'run';
+            } else if ('run') {
+                if (p == len && i == 0) {
+                    target = -((slider * (p + 1)) + slider);
+                    limits = -slider;
+                } else if (p == 0 && i == len) {
+                    target = 0;
+                    limits = -((len * slider) + slider);
+                } else {
+                    target = -((slider * i) + slider);
+                }
             }
+
+            this.setTranslation(target, duration);
+
+            (function() {
+                if (limits != null) {
+                    this.setTranslation(limits, 0);
+                }
+
+                this.autoslide();
+            }.bind(this).delay(this.options.duration));
         }
-
-        this.setTranslation(target, duration);
-
-        (function() {
-            if (limits != null) {
-                this.setTranslation(limits, 0);
-            }
-
-            this.autoslide();
-        }.bind(this).delay(this.options.duration));
     },
     setTranslation: function(target, duration) {
         target += 'px';
