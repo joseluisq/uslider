@@ -1,20 +1,15 @@
-/*
- ---
- 
- name: uSlider v1.1
- description: Simple Mootools CSS3 Adaptable Slider
- license: MIT-Style License <http://www.lbnstudio.fr/license.txt>
- copyright: Jose Luis Quintana <http://www.lbnstudio.fr/>
- authors: Jose Luis Quintana <joseluisquintana20@gmail.com>
- requires: 
- - Core: 1.4/*
- provides: uSlider
- 
- ...
- */
+/**
+ * uSlider v1.2
+ * Simple Mootools CSS3 Adaptable Slider
+ * MIT License <http://joseluisquintana.pe/license.txt>
+ * Jose Luis Quintana <http://joseluisquintana.pe/>
+ * requires: 
+ * - Core: 1.4/*
+ * - uSizer: 1.0 (For center crop feature)
+ **/
 
 window.uSlider = new Class({
-    version: '1.1',
+    version: '1.2',
     options: {
         controlnav: true,
         directionnav: true,
@@ -72,8 +67,7 @@ window.uSlider = new Class({
                     props = ['perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective'];
             for (var i in props) {
                 if (obj.style[ props[i] ] !== undefined) {
-                    this.upfx = props[i].replace('Perspective', '').toLowerCase();
-                    this.uprop = "-" + this.upfx + "-transform";
+                    this.upfx = '-' + props[i].replace('Perspective', '').toLowerCase();
                     return true;
                 }
             }
@@ -97,7 +91,7 @@ window.uSlider = new Class({
         this.stackSlides = slidewrap.getElements('li');
 
         if (opt.effect == 'slide') {
-            slidewrap.set("tween", {
+            slidewrap.set('tween', {
                 duration: opt.duration,
                 transition: opt.transition
             }).setStyle('overflow', 'hidden');
@@ -137,7 +131,7 @@ window.uSlider = new Class({
                     'opacity': 0
                 });
 
-                li.set("tween", {
+                li.set('tween', {
                     duration: opt.duration,
                     transition: opt.transition
                 });
@@ -155,7 +149,7 @@ window.uSlider = new Class({
                             'visibility': 'hidden',
                             'opacity': 0
                         }
-                    }).set("tween", {
+                    }).set('tween', {
                         duration: opt.duration,
                         transition: opt.transition
                     });
@@ -353,7 +347,7 @@ window.uSlider = new Class({
             this.setTranslation(target, duration);
 
             (function() {
-                if (limits != null) {
+                if (limits !== null) {
                     this.setTranslation(limits, 0);
                 }
 
@@ -366,12 +360,16 @@ window.uSlider = new Class({
 
         if (this.transitions) {
             var tfn = this.transitioncss[this.options.transition];
-            this.slidewrap.setStyle("-" + this.upfx + "-transition-duration", duration + 's');
-            this.slidewrap.setStyle("-" + this.upfx + "-transition-timing-function",
-                    'cubic-bezier(' + (tfn ? tfn : this.transitioncss['ease']) + ')');
-            this.slidewrap.setStyle(this.uprop, "translate3d(" + target + ",0,0)");
+            this.slidewrap.setStyle(this.upfx + '-transition-duration', duration + 's');
+            this.slidewrap.setStyle(this.upfx + '-transition-timing-function', 'cubic-bezier(' + (tfn ? tfn : this.transitioncss['ease']) + ')');
+            this.slidewrap.setStyle(this.upfx + '-transform', 'translate3d(' + target + ',0,0)');
+            this.slidewrap.setStyles({
+                'transition-duration': duration + 's',
+                'transition-timing-function': 'cubic-bezier(' + (tfn ? tfn : this.transitioncss['ease']) + ')',
+                'transform': 'translate3d(' + target + ',0,0)'
+            });
         } else {
-            if (duration == 0) {
+            if (duration === 0) {
                 this.slidewrap.setStyle('margin-left', target);
             } else {
                 this.slidewrap.tween('margin-left', target);
@@ -379,25 +377,27 @@ window.uSlider = new Class({
         }
     },
     resize: function(width, height) {
-        this.working = true;
-        clearTimeout(this.timeout);
-
-        width = width ? width : parseInt(this.slider.getStyle('width')),
-                height = height ? height : parseInt(this.slider.getStyle('height'));
-
-        this.updateSizes();
-
-        this.slidewrap.getElements('li').each(function(slide) {
-            if (this.uSizer && slide.getElement('img.completed')) {
-                this.centerCrop(slide, slide.getElement('img.completed'), width, height);
-            }
-        }.bind(this));
-
-        this.translation(this.i, 0);
-
         (function() {
-            this.autoslide();
-        }.bind(this).delay(this.options.duration));
+            this.working = true;
+            clearTimeout(this.timeout);
+
+            width = width ? width : parseInt(this.slider.getStyle('width')),
+                    height = height ? height : parseInt(this.slider.getStyle('height'));
+
+            this.updateSizes();
+
+            this.slidewrap.getElements('li').each(function(slide) {
+                if (this.uSizer && slide.getElement('img.completed')) {
+                    this.centerCrop(slide, slide.getElement('img.completed'), width, height);
+                }
+            }.bind(this));
+
+            this.translation(this.i, 0);
+
+            (function() {
+                this.autoslide();
+            }.bind(this).delay(this.options.duration));
+        }.bind(this).delay(300));
     },
     centerCrop: function(slide, img, width, height) {
         this.uSizer.setParent(slide);
